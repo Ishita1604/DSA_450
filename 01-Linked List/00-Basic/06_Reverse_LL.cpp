@@ -15,6 +15,7 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+        // In-place Reversal Approach / Iterative ———→
         // TIME:  O(N)
         // SPACE: O(1)
         // Initialise ---
@@ -35,3 +36,4 @@ public:
         return prev;
     }
 };
+
