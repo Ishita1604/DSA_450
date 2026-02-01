@@ -35,26 +35,26 @@ class Solution {
     // 1) Brute Force Approach ----
     // Time:  O(N*N) due to nested loops. V. Very bad solution.
     // Space: O(1)
-    // vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target) {
-    //     vector<pair<int, int>> ans;
-    //     Node* i = head;
-    //     Node* j = NULL;
-    //     // int exp_sum;
-    //     while (i != NULL) {
-    //         j = i->next;
-    //         // exp_sum = target - i->data;       ⇒ This is basically the COMPLEMENT.
-    //         while (j != NULL && i->data+j->data <= target) {
-    //             // if (j->data == exp_sum) {
-    //             if (i->data + j->data == target) {
-    //                 ans.push_back({i->data, j->data});
-    //                 break;
-    //             }
-    //             else j = j->next;
-    //         }
-    //         i = i->next;
-    //     }
-    //     return ans;
-    // }
+    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target) {
+        vector<pair<int, int>> ans;
+        Node* i = head;
+        Node* j = NULL;
+        // int exp_sum;
+        while (i != NULL) {
+            j = i->next;
+            // exp_sum = target - i->data;       ⇒ This is basically the COMPLEMENT.
+            while (j != NULL && i->data+j->data <= target) {
+                // if (j->data == exp_sum) {
+                if (i->data + j->data == target) {
+                    ans.push_back({i->data, j->data});
+                    break;
+                }
+                else j = j->next;
+            }
+            i = i->next;
+        }
+        return ans;
+    }
         
         
         
@@ -63,26 +63,26 @@ class Solution {
     // 2) Naive Approach: Hash Map ----
     // Time:  O(N) to traverse the DLL elements. 
     // Space: O(N) to create hashset to store DLL elements. Need to return DLL element so no need of hashmap & store element-index key-value.
-    // vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target) {
-    //     vector<pair<int, int>> ans;
-    //     unordered_set<int> uset;
-    //     Node* tmp = head;
-    //     int exp_sum; 
-    //     while (tmp != NULL) {
-    //         uset.insert(tmp->data);
-    //         tmp = tmp->next;
-    //     }
-    //     tmp = head;
-    //     while (tmp != NULL) {
-    //         exp_sum = target - tmp->data;   // The COMPLEMENT.
-    //         if (uset.find(exp_sum) != uset.end() && exp_sum != tmp->data) { // Found. ☆☆ 2nd condition works bcos all elements are distinct.
-    //             ans.push_back({tmp->data, exp_sum});
-    //             uset.erase(tmp->data);
-    //         }
-    //         tmp = tmp->next;
-    //     }
-    //     return ans;
-    // }    
+    vector<pair<int, int>> findPairsWithGivenSum1(Node *head, int target) {
+        vector<pair<int, int>> ans;
+        unordered_set<int> uset;
+        Node* tmp = head;
+        int exp_sum; 
+        while (tmp != NULL) {
+            uset.insert(tmp->data);
+            tmp = tmp->next;
+        }
+        tmp = head;
+        while (tmp != NULL) {
+            exp_sum = target - tmp->data;   // The COMPLEMENT.
+            if (uset.find(exp_sum) != uset.end() && exp_sum != tmp->data) { // Found. ☆☆ 2nd condition works bcos all elements are distinct.
+                ans.push_back({tmp->data, exp_sum});
+                uset.erase(tmp->data);
+            }
+            tmp = tmp->next;
+        }
+        return ans;
+    }    
 
     
     
@@ -91,7 +91,7 @@ class Solution {
     // 3) Optimal Approach: Two Pointer to utilise the SORTED DISTINCT & DOUBLY LL ----
     // Time:  O(N) to traverse the DLL elements. 
     // Space: O(1)
-    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target) {
+    vector<pair<int, int>> findPairsWithGivenSum2(Node *head, int target) {
         vector<pair<int, int>> ans;
         Node* l = head;   // Left pointer.
         Node* r = head;
@@ -147,7 +147,9 @@ int main() {
 
     int target = 7;
     Solution s;
-    vector<pair<int, int>> ans = s.findPairsWithGivenSum(head, target);
+    // vector<pair<int, int>> ans = s.findPairsWithGivenSum(head, target);
+    // vector<pair<int, int>> ans = s.findPairsWithGivenSum1(head, target);
+    vector<pair<int, int>> ans = s.findPairsWithGivenSum2(head, target);
     print(ans);
 
     return 0;
